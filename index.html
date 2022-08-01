@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link type="image/png" sizes="16x16" rel="icon" href="./assets/img/faviconsm.png">
+    <link type="image/png" sizes="32x32" rel="icon" href="./assets/img/faviconlg.png">
+    <title>El camino hacia el aprobado</title>
+</head>
+
+<body class="bg-secondary">
+    <div class="d-flex flex-column justify-content-center align-items-center mt-2">
+        <h1 class="fs-1 text-light">Bienvenido a <span class="text-warning">"El camino hacia el aprobado"</span></h1>
+        <div class="border border-primary bg-dark container-fluid" style="width: 1200px; height: 800px">
+            <div class="row h-75">
+                <div id="pantalla"
+                    class="border border-primary text-white col-9 d-flex align-items-center justify-content-center flex-column fs-1">
+                    <div id="screen" class="d-flex flex-column container-fluid">
+                        <div class="col d-flex flex-column">
+                            <h2 class="text-center mb-2">Si es tu primera vez o quieres crear un nuevo
+                                personaje escribe un nombre y clickea en "Nueva partida"</h2>
+                            <input type="text" name="nombre" id="name" class="fs-3 m-3 col"
+                                placeholder="Elige el nombre de tu personaje">
+                            <p class="fs-5 text-center"><span class="text-warning">CUIDADO! si ya tienes un personaje y
+                                    comienzas
+                                    una nueva partida, tu antiguo personaje desaparecerá</span></p>
+                            <input type="button" id="nameBtn" class="btn w-25 btnNewGame fs-2 align-self-center"
+                                value="Nueva Partida">
+                            <div id="loadScreen" class="col d-flex flex-column">
+                                <h2 class="text-center mt-5 mb-3"> Si ya tienes un personaje puedes retomar tu última
+                                    sesión
+                                </h2>
+                                <input type="button" id="loadBtn" class="btn w-25 btnLoadGame fs-2 align-self-center"
+                                    value="Cargar Partida">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="interface" class="border border-primary text-white col d-flex flex-row flex-wrap"></div>
+            </div>
+            <div id="texto" class="border row border-primary text-white align-self-end h-25 fs-1 p-2">
+                <p class="pt-3">
+                    Hola! Gracias por
+                    jugar este pequeño proyecto. Es un juego sencillo pero no te confíes, no entres al combate sin estar
+                    preparado o <strong class="red-text text-center text-shadow">MORIRAS</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

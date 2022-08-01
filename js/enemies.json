@@ -1,0 +1,24 @@
+{
+    "enemyEasy": [
+        { "name": "Araña", "level": 1, "maxHealth": 18, "health": 18, "attack": 3, "defense": 0, "speed": 1, "exp": 34, "id": 1, "gold": 11, "imgURL": "./assets/img/enemies/araña.png" },
+        { "name": "Serpiente", "level": 3, "maxHealth": 14, "health": 14, "attack": 5, "defense": 1, "speed": 2, "exp": 35, "id": 2, "gold": 14, "imgURL": "./assets/img/enemies/serpiente.png" },
+        { "name": "Escarabajo", "level": 3, "maxHealth": 20, "health": 20, "attack": 2, "defense": 2, "speed": 1, "exp": 34, "id": 3, "gold": 12, "imgURL": "./assets/img/enemies/escarabajo.png" },
+        { "name": "Murciélago", "level": 2, "maxHealth": 16, "health": 16, "attack": 4, "defense": 1, "speed": 3, "exp": 38, "id": 4, "gold": 15, "imgURL": "./assets/img/enemies/murcielago.png" },
+        { "name": "Abeja", "level": 2, "maxHealth": 16, "health": 16, "attack": 4, "defense": 2, "speed": 3, "exp": 31, "id": 5, "gold": 16, "imgURL": "./assets/img/enemies/abeja.png" }
+    ],
+    "enemyMedium": [
+            { "name": "Orco Guerrero", "level": 6, "maxHealth": 30, "health": 30, "attack": 12, "defense": 4, "speed": 3, "exp": 64, "id": 1, "gold": 28, "imgURL": "./assets/img/enemies/orco.png" },
+            { "name": "Escorpión Gigante", "level": 4, "maxHealth": 25, "health": 25, "attack": 11, "defense": 4, "speed": 5, "exp": 57, "id": 2, "gold": 21, "imgURL": "./assets/img/enemies/escorpion.png" },
+            { "name": "Planta Carnívora", "level": 4, "maxHealth": 22, "health": 22, "attack": 12, "defense": 1, "speed": 4, "exp": 65, "id": 3, "gold": 20, "imgURL": "./assets/img/enemies/carnivora.png" },
+            { "name": "Esqueleto Guerrero", "level": 5, "maxHealth": 20, "health": 20, "attack": 13, "defense": 1, "speed": 5, "exp": 52, "id": 4, "gold": 25, "imgURL": "./assets/img/enemies/esqueletoguerrero.png" },
+            { "name": "Oso", "level": 5, "maxHealth": 30, "health": 30, "attack": 12, "defense": 2, "speed": 2, "exp": 65, "id": 5, "gold": 20, "imgURL": "./assets/img/enemies/oso.png" }
+        ],
+    "enemyHard" : [
+                { "name": "Rey Cangrejo", "level": 10, "maxHealth": 45, "health": 45, "attack": 16, "defense": 12, "speed": 3, "exp": 152, "id": 1, "gold": 37, "imgURL": "./assets/img/enemies/cangrejo.png" },
+                { "name": "Dragón Esqueleto", "level": 12, "maxHealth": 55, "health": 55, "attack": 15, "defense": 9, "speed": 6, "exp": 162, "id": 2, "gold": 39, "imgURL": "./assets/img/enemies/dragon.png" },
+                { "name": "Elemental de Fuego", "level": 11, "maxHealth": 40, "health": 40, "attack": 14, "defense": 9, "exp": 155, "speed": 9, "id": 3, "gold": 30, "imgURL": "./assets/img/enemies/elemental.png" },
+                { "name": "Hombre Lobo", "level": 10, "maxHealth": 40, "health": 40, "attack": 16, "defense": 11, "exp": 152, "speed": 9, "id": 4, "gold": 33, "imgURL": "./assets/img/enemies/hombrelobo.png" },
+                { "name": "Thanatos", "level": 13, "maxHealth": 50, "health": 50, "attack": 18, "defense": 10, "exp": 170, "speed": 9, "id": 5, "gold": 50, "imgURL": "./assets/img/enemies/thanatos.png" }
+            ]        
+        
+}

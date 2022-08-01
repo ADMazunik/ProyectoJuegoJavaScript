@@ -148,14 +148,14 @@ const playerOptions = {
             let calcPlayerDamage = player.attack + offsetDamage - enemy.defense
             enemy.health = enemy.health - calcPlayerDamage
 
-            damageDealt.push(calcPlayerDamage)
+            damageDealt[0] = (calcPlayerDamage)
         }
         function enemyAttack() {
             let offsetDamage = getRandomNumber(1, enemy.attack)
             let calcEnemyDamage = enemy.attack + offsetDamage - player.defense
             calcEnemyDamage < 0 ? calcEnemyDamage = 0 : calcEnemyDamage
             player.currentHealth = player.currentHealth - calcEnemyDamage
-            damageDealt.push(calcEnemyDamage)
+            damageDealt[1] = (calcEnemyDamage)
         }
 
         if (player.speed >= enemy.speed) {

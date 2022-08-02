@@ -6,8 +6,9 @@ let enemyHard = [];
 let counter = 1;
 let playerName = localStorage.getItem("name");
 let bossState = localStorage.getItem("bossState") || "alive";
+const enemiesURL = "./enemies.json";
+//Objeto desestructurado que capta los datos necesarios para dibujar en la sección Interface el personaje guardado previamente
 const { className: nombreClase, level: nivel, portrait: retrato } = player || "";
-
 
 let screen = document.getElementById("screen");
 let interface = document.getElementById("interface")
@@ -16,40 +17,35 @@ let nameBtn = document.getElementById("nameBtn");
 let loadBtn = document.getElementById("loadBtn")
 let nameImput = document.getElementById("name");
 
-const enemiesURL = "./enemies.json";
-
-
 nameBtn.addEventListener("click", () => {
     playerName = nameImput.value || "Jugador"
     classRender();
     text.innerHTML = `<div class="text-center text-light align-self-center">Para volver a la pantalla anterior reinicia la página</div>`
 });
-loadBtn.addEventListener("click", loadGame)
 
+loadBtn.addEventListener("click", loadGame);
+
+// Operador que renderiza en el DOM los datos guardados solo si los encuentra en el local storage
 player != undefined && loadStateInterface();
 
-function Heroclass(className, maxHealth, attack, defense, speed,) {
+//Objeto constructor que representa al personaje del jugador
+function heroClass(className, maxHealth, attack, defense, speed,) {
     this.className = className;
     this.maxHealth = maxHealth;
     this.currentHealth = maxHealth;
     this.attack = attack;
     this.defense = defense;
     this.speed = speed;
-    this.level = 1
-    this.experience = 0
-    this.maxExperience = 100
-    this.gold = 50
-    this.potion = 2
-    this.portrait = `./assets/img/players/${className.toLowerCase()}.png`
-    this.battleImg = `./assets/img/players/${className.toLowerCase()}battle.png`
+    this.level = 1;
+    this.experience = 0;
+    this.maxExperience = 100;
+    this.gold = 50;
+    this.potion = 2;
+    this.portrait = `./assets/img/players/${className.toLowerCase()}.png`;
+    this.battleImg = `./assets/img/players/${className.toLowerCase()}battle.png`;
 }
 
-const clases = [
-    { name: "Guerrero", imgURL: "./assets/img/players/guerrero.png", health: 22, attack: 5, defense: 3, speed: 2 },
-    { name: "Monje", imgURL: "./assets/img/players/monje.png", health: 30, attack: 4, defense: 4, speed: 1 },
-    { name: "Arquera", imgURL: "./assets/img/players/arquera.png", health: 14, attack: 6, defense: 1, speed: 4 }
-
-]
+// Función asincrónica que trae del JSON los arrays de enemigos para el combate
 const getEnemies = () => {
     fetch(`./js/enemies.json`)
         .then(res => res.json())
@@ -58,7 +54,6 @@ const getEnemies = () => {
             enemyMedium = res.enemyMedium
             enemyHard = res.enemyHard
         })
-
 }
 getEnemies();
 
@@ -77,6 +72,13 @@ const backgrounds = [
     { name: "finalboss", imgURL: "./assets/img/backgrounds/boss.png", id: 9, },
 ]
 
+const clases = [
+    { name: "Guerrero", imgURL: "./assets/img/players/guerrero.png", health: 22, attack: 5, defense: 3, speed: 2 },
+    { name: "Monje", imgURL: "./assets/img/players/monje.png", health: 30, attack: 4, defense: 4, speed: 1 },
+    { name: "Arquera", imgURL: "./assets/img/players/arquera.png", health: 14, attack: 6, defense: 1, speed: 4 }
+]
+
+// Función que dibuja sobre el DOM la selección de la clase con la cual jugar
 function classRender() {
     let acumulador = `
                         <div>
@@ -93,7 +95,7 @@ function classRender() {
                                                                 <h4>Ataque ${classes.attack}</h4>
                                                                 <h4>Defensa ${classes.defense}</h4>
                                                                 <h4>Velocidad ${classes.speed}</h4>
-                                                                <input type="button" id="${classes.name.toLowerCase()}" class="btn btn-dark btn-class btn w-auto align-self-center"
+                                                                <input type="button" id="${classes.name.toLowerCase()}" class="btn btnNewGame btn-class btn w-auto align-self-center"
                                                      value="Elegir">
                                                              
                                             </div>
@@ -101,44 +103,42 @@ function classRender() {
                          </div>
         `
     });
-
     screen.innerHTML = acumulador;
     const btnDefiner = document.querySelectorAll(".btn-class");
     btnDefiner.forEach(button => button.addEventListener("click", classSelect));
-
 }
 
-
-
+//Función que proporciona los datos del personaje seleccionado por el jugaddor para el objeto heroClass
 const classSelect = (e) => {
     let clase = (e.target.getAttribute('id'))
-
     const selectClass = (classSelected) => {
         if (classSelected == "guerrero") {
-            player = new Heroclass("Guerrero", 22, 5, 3, 2);
+            player = new heroClass("Guerrero", 22, 5, 3, 2);
             return player;
         } else if (classSelected == "monje") {
-            player = new Heroclass("Monje", 30, 4, 4, 1);
+            player = new heroClass("Monje", 30, 4, 4, 1);
             return player;
         } else if (classSelected == "arquera") {
-            player = new Heroclass("Arquera", 18, 6, 1, 4);
+            player = new heroClass("Arquera", 18, 6, 1, 4);
             return player;
-        } else {
-        }
+        } else { }
     }
     selectClass(clase)
     changeInterface();
-
     text.innerHTML = `
                             <h1 class="fs-1 container">Tu objetivo es volverte muy fuerte para enfrentar al terrible Jefe que te espera al final de esta aventura...</h1>
                             <input type="button" id="startBtn" class="container btn btn-success btn btn-start w-50 fs-2 align-self-center align-self-center" value="Jugar como ${player.className}">
                         `
-
     const startBtn = document.getElementById("startBtn");
-    startBtn.addEventListener("click", gameStart)
-
+    startBtn.addEventListener("click", () => {
+        screenTown();
+        text.innerHTML = `<p class="fs-2">Te despiertas en la taberna del pueblo. Recuerdas vagamente que aceptaste derrotar al terrible monstruo que aterroriza a los habitantes.
+                            Para ello deberás entrenar o no tendrás oportunidad alguna.</p>                          
+                        `
+    });
 }
 
+// Objeto que se utiliza para realizar las opciones durante el combate
 let damageDealt = []
 const playerOptions = {
     attack: function () {
@@ -148,14 +148,14 @@ const playerOptions = {
             let calcPlayerDamage = player.attack + offsetDamage - enemy.defense
             enemy.health = enemy.health - calcPlayerDamage
 
-            damageDealt[0] = (calcPlayerDamage)
+            damageDealt.push(calcPlayerDamage)
         }
         function enemyAttack() {
             let offsetDamage = getRandomNumber(1, enemy.attack)
             let calcEnemyDamage = enemy.attack + offsetDamage - player.defense
             calcEnemyDamage < 0 ? calcEnemyDamage = 0 : calcEnemyDamage
             player.currentHealth = player.currentHealth - calcEnemyDamage
-            damageDealt[1] = (calcEnemyDamage)
+            damageDealt.push(calcEnemyDamage)
         }
 
         if (player.speed >= enemy.speed) {
@@ -214,7 +214,7 @@ const playerOptions = {
 
 }
 
-// Función para determinar el enemigo a combatir
+// Función para determinar el enemigo a combatir en base al nivel del jugador
 function combat() {
     if (player.level >= 8) {
         enemySelect(enemyHard);
@@ -227,16 +227,6 @@ function combat() {
     bgImg = backgrounds.find(((el) => el.id == number))
     text.innerHTML = `<p class="fs-1 text-center mt-4">Lucharás contra ${enemy.name}.</br><span class="fw-bold">ELIGE UNA ACCIÓN</span></p>`
     screenBattle();
-}
-
-function rest() {
-    player.currentHealth = player.maxHealth;
-    changeInterface();
-    saveGame();
-    text.innerHTML = `<div class="d-flex flex-column justify-content-between">
-                                            <p class="fs-1">Descansas en la taberna y recuperas tus energías.</p>
-                                            <p class="fs-2 green-text align-self-end">(Se han guardado tus datos.)</p>
-                       </div>`
 }
 
 // Funcion que selecciona un enemigo del Array correspondiente
@@ -279,17 +269,16 @@ function screenBattle() {
     btnPotion.forEach(el => el.addEventListener("click", playerOptions.heal));
 }
 
+// Función utilizada para agregar animaciones al atacar en el combate utilizando la librería SweetAlert2 para dar información luego.
 function battleAnimation() {
     screen.innerHTML = `<div class="${bgImg.name} d-flex justify-content-center align-items-center flex-column">
     <div class="container bg-fight d-flex flex-row justify-content-between py-4">
                                         <img id="enemyImage" class="align-self-center enemyBattle" src="${enemy.imgURL}">
                                         <img id="playerImage" class="align-self-end playerBattle" src="${player.battleImg}">
     `
-    screen.classList.add("animate__animated", "animate__flipInX")
-
+    screen.classList.add("animate__animated", "animate__flipInX");
     let enemyImage = document.getElementById("enemyImage");
     let playerImage = document.getElementById("playerImage");
-
     screen.addEventListener("animationend", () => {
         enemyImage.classList.add("enemyAttack")
         playerImage.classList.add("playerAttack")
@@ -316,19 +305,9 @@ function battleAnimation() {
             })
         }
     })
-
-
 }
 
-function gameStart() {
-    screenTown();
-    text.innerHTML = `<p class="fs-2">Te despiertas en la taberna del pueblo. Recuerdas vagamente que aceptaste derrotar al terrible monstruo que aterroriza a los habitantes.
-                        Para ello deberás entrenar o no tendrás oportunidad alguna.</p>
-                      
-                    `
-}
-
-// Función que lleva al pueblo
+// Función que renderiza en el DOM el pueblo y sus opciones
 function screenTown() {
     const bossFight = `<h1 class="fs-1 text-center">¿Te sientes preparado/a para enfrentar al enemigo más poderoso?<h1/>
     <button type="button" id="bossFight" class="btn btn-town btn-lg p-3">Hora de salvar al pueblo</button>`
@@ -358,6 +337,7 @@ function screenTown() {
     };
 }
 
+// Función que dibuja en el DOM las opciones de la taberna: de descanso y para comprar pociones
 function tavern() {
     screen.innerHTML = `
     <div class="screen-tavern d-flex flex-column gap-3 justify-content-center align-items-center animate__animated animate__fadeIn">
@@ -379,6 +359,18 @@ function tavern() {
     });
 }
 
+//Función que restablece la vida del personaje
+function rest() {
+    player.currentHealth = player.maxHealth;
+    changeInterface();
+    saveGame();
+    text.innerHTML = `<div class="d-flex flex-column justify-content-between">
+                                            <p class="fs-1">Descansas en la taberna y recuperas tus energías.</p>
+                                            <p class="fs-2 green-text align-self-end">(Se han guardado tus datos.)</p>
+                       </div>`
+}
+
+// Función que renderiza en el DOM una ventana que permite seleccionar la cantidad de pociones a comprar
 function potionBuyMenu() {
     const renderPotionScreen = () => {
         potionScreen.innerHTML = `  <div class="fs-1 text-center">¿Cuántas pociones deseas comprar?<div class="fs-1 text-center">
@@ -393,10 +385,8 @@ function potionBuyMenu() {
                                     <button type="button" id="goBack" class="btn btn-town">Volver atrás</button>
                                  `};
     const potionScreen = document.createElement("div");
-    potionScreen.classList.add("potionScreen", "d-flex", "flex-column", "justify-content-center", "align-items-center", "gap-3")
+    potionScreen.classList.add("potionScreen", "d-flex", "flex-column", "justify-content-center", "align-items-center", "gap-3");
     screen.appendChild(potionScreen);
-
-
 
     const closePotionMenu = () => {
         screen.removeChild(screen.lastChild)
@@ -434,12 +424,11 @@ function potionBuyMenu() {
             text.innerHTML = `<h1 class="fs-1 fw-bold red-text d-flex justify-content-center align-items-center animate__animated animate__flash">¡No tienes oro suficiente!</>`
         }
     };
-    const btnPotion = document.getElementById("buyPotion")
-    btnPotion.addEventListener("click", buyPotions)
-
-
+    const btnPotion = document.getElementById("buyPotion");
+    btnPotion.addEventListener("click", buyPotions);
 }
 
+// Función que renderiza en el DOM, en el ID interface, los datos actuales del personaje
 function changeInterface() {
     interface.innerHTML = `
     <div class="d-flex flex-column">
@@ -461,6 +450,7 @@ function changeInterface() {
     `
 }
 
+//Función utilizada al matar al enemigo para sumar la experiencia y el oro al personaje y volver al pueblo
 function enemyDead(enemyName, enemyExp, enemyGold) {
     if (enemyName == "Entrega Final") {
         screen.innerHTML = `
@@ -478,7 +468,6 @@ function enemyDead(enemyName, enemyExp, enemyGold) {
             screenTown();
             text.innerHTML = ``
         })
-
     } else {
         const enemyHP = document.getElementById("enemyHP")
         const battleButtons = document.getElementById("battleButtons")
@@ -520,6 +509,7 @@ function enemyDead(enemyName, enemyExp, enemyGold) {
     }
 }
 
+//Función utilizada cuando la vida del personaje llega a 0
 function gameOver() {
     screen.innerHTML = `<div class="screen-dead d-flex flex-column justify-content-center align-items-center">
         <h1 class="text-center">Has muerto...</h1>
@@ -529,6 +519,7 @@ function gameOver() {
     btnDead.addEventListener("click", () => location.reload());
 }
 
+// Función utilizada para sumar puntos de estadísticas dependiendo de la clase seleccionada por el jugador
 function levelUp() {
     text.innerHTML = `<h1 class="fs-1 text-center align-self-center justify-self-center">¡Has subido de nivel!</h1>`
     if (player.className == "Guerrero") {
@@ -551,9 +542,7 @@ function levelUp() {
                 <button type="button" id="levelUp" class="btn btn-lvlup btn-lg p-1 text-shadow">Continuar</button>
             </div>
         </div>
-`
-
-    } else if (player.className == "Monje") {
+`} else if (player.className == "Monje") {
         player.level++
         player.maxHealth = (player.maxHealth + 6)
         player.currentHealth = player.maxHealth
@@ -573,8 +562,7 @@ function levelUp() {
                 <button type="button" id="levelUp" class="btn btn-lvlup btn-lg p-1 text-shadow">Continuar</button>
             </div>
         </div>
-`
-    } else {
+`} else {
         player.level++
         player.maxHealth = (player.maxHealth + 4)
         player.currentHealth = player.maxHealth
@@ -594,27 +582,25 @@ function levelUp() {
                 <button type="button" id="levelUp" class="btn btn-lvlup btn-lg p-1 text-shadow">Continuar</button>
             </div>
         </div>
-`
-    }
+`}
     let btnLvlUp = document.getElementById("levelUp");
     btnLvlUp.addEventListener("click", screenTown);
     btnLvlUp.addEventListener("click", () => text.innerHTML = ``);
 }
 
-//Función para guardar la partida
-
+//Función para guardar la partida, almacenando en el localStorage los datos del objeto 'player' y el nombre elegido por el jugador
 function saveGame() {
     localStorage.setItem("name", `${playerName}`);
     localStorage.setItem("playerData", JSON.stringify(player));
     localStorage.setItem("bossState", bossState)
 }
+
 // Función para cargar los datos guardados
 function loadGame() {
     if (player == undefined) {
         const loadScreen = document.getElementById("loadScreen")
         loadScreen.classList.add("text-center")
         loadScreen.innerHTML = `<h1 class="m-5">Lo siento, no se encontraron datos guardados</h1>`
-
     } else {
         playerName = localStorage.getItem("name")
         player = JSON.parse(localStorage.getItem("playerData"));
@@ -625,6 +611,8 @@ function loadGame() {
     }
 
 }
+
+// Función utilizada para renderizar en el DOM, en la ID interface los datos guardados en el localStorage, para identificar que hay un personaje ya creado
 function loadStateInterface() {
     interface.innerHTML = `
                             <div class= "d-flex flex-column text-center justify-content-center">
@@ -637,11 +625,9 @@ function loadStateInterface() {
 
                                     </div>                                                                            
                             </div>`
-
 }
 
-
-// Función para recibir un número entero aleatorio
+// Función para recibir un número entero aleatorio, utilizado tanto en el combate como en la seleccion de enemigos y escenarios al azar
 function getRandomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);

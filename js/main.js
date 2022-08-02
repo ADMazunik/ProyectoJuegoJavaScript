@@ -147,7 +147,6 @@ const playerOptions = {
             let offsetDamage = getRandomNumber(1, player.attack)
             let calcPlayerDamage = player.attack + offsetDamage - enemy.defense
             enemy.health = enemy.health - calcPlayerDamage
-
             damageDealt[0] = calcPlayerDamage
         }
         function enemyAttack() {

@@ -1,6 +1,7 @@
 body {
   font-family: "VT323", monospace;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 #pantalla,

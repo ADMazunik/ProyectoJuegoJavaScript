@@ -131,6 +131,7 @@ const classSelect = (e) => {
                         `
     const startBtn = document.getElementById("startBtn");
     startBtn.addEventListener("click", () => {
+        bossState = "alive"
         screenTown();
         text.innerHTML = `<p class="fs-2">Te despiertas en la taberna del pueblo. Recuerdas vagamente que aceptaste derrotar al terrible monstruo que aterroriza a los habitantes.
                             Para ello deberás entrenar o no tendrás oportunidad alguna.</p>                          
